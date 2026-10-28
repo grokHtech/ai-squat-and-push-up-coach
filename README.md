@@ -89,6 +89,14 @@ python live_coach.py --exercise pushup
 python live_coach.py --camera 1 --people 1
 ```
 
+On Windows, the project virtual environment can be launched directly:
+
+```powershell
+py -3.12 -m venv .venv
+.\.venv\Scripts\python.exe -m pip install -r requirements.txt
+.\.venv\Scripts\python.exe live_coach.py
+```
+
 The coach opens a mirrored webcam preview with rep counts, form scores, and live
 form cues. Press **Q** or **Esc** to stop. Use `--camera` to select another
 camera, `--people 2` to track two people, or `--width` and `--height` to request
@@ -96,6 +104,8 @@ a different capture resolution. This local webcam mode does not save a video;
 the recorded-video workflow above remains available for annotated exports.
 
 ### Browser coach
+
+Try the [public browser coach](https://grokhtech.github.io/ai-squat-and-push-up-coach/).
 
 The browser version runs pose detection and scoring on the device; it does not
 upload camera frames. Serve it from `localhost` during development (camera access
