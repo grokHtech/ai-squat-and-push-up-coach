@@ -1,0 +1,116 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="theme-color" content="#101812" />
+    <meta
+      name="description"
+      content="Private, on-device squat and push-up form coaching in your browser."
+    />
+    <title>Form Coach — AI Workout Coaching</title>
+  </head>
+  <body>
+    <main class="app-shell">
+      <header class="topbar">
+        <a class="brand" href="./" aria-label="Form Coach home">
+          <span class="brand-mark" aria-hidden="true">F</span>
+          <span>FORM<span class="brand-light">COACH</span></span>
+        </a>
+        <span class="privacy-chip">
+          <span class="privacy-dot"></span>
+          YOUR CAMERA STAYS ON THIS DEVICE
+        </span>
+      </header>
+
+      <section class="intro">
+        <p class="eyebrow">PERSONAL TRAINING, WITHOUT THE GUESSWORK</p>
+        <h1>Make every rep<br /><span>count.</span></h1>
+        <p class="intro-copy">
+          Real-time form feedback for squats and push-ups. Pick a movement,
+          set your camera, and get started.
+        </p>
+      </section>
+
+      <section class="coach-layout" aria-label="Live workout coach">
+        <div class="camera-column">
+          <div class="camera-toolbar">
+            <div class="exercise-switch" role="group" aria-label="Choose exercise">
+              <button class="exercise-button is-active" data-exercise="squat" type="button">
+                Squat
+              </button>
+              <button class="exercise-button" data-exercise="pushup" type="button">
+                Push-up
+              </button>
+            </div>
+            <span class="camera-state" id="camera-state" aria-live="polite">
+              CAMERA OFF
+            </span>
+          </div>
+
+          <div class="camera-stage" id="camera-stage">
+            <video id="camera" autoplay playsinline muted></video>
+            <canvas id="overlay" aria-hidden="true"></canvas>
+            <div class="camera-placeholder" id="camera-placeholder">
+              <span class="camera-icon" aria-hidden="true">◎</span>
+              <strong>Your workout starts here</strong>
+              <span>Allow camera access to get live feedback.</span>
+            </div>
+            <div class="stage-label" id="stage-label">READY WHEN YOU ARE</div>
+          </div>
+
+          <div class="camera-actions">
+            <button class="start-button" id="start-button" type="button">
+              <span class="button-icon" aria-hidden="true">▶</span>
+              Start camera
+            </button>
+            <p class="camera-hint" id="camera-hint">
+              Stand far enough back to keep your full body in frame.
+            </p>
+          </div>
+        </div>
+
+        <aside class="stats-column" aria-label="Workout stats">
+          <div class="stat-card rep-card">
+            <span class="stat-label">GOOD REPS</span>
+            <strong class="rep-count" id="good-reps">0</strong>
+            <span class="stat-note" id="attempt-count">0 attempts</span>
+          </div>
+          <div class="stat-card">
+            <span class="stat-label">LAST SCORE</span>
+            <div class="score-row">
+              <strong class="score-value" id="last-score">--</strong>
+              <span class="score-unit">/ 100</span>
+            </div>
+            <div class="score-track"><span id="score-track"></span></div>
+          </div>
+          <div class="stat-card">
+            <span class="stat-label">MOVEMENT</span>
+            <strong class="stat-value" id="movement-value">Ready</strong>
+            <span class="stat-note" id="angle-value">Angle: --</span>
+          </div>
+          <div class="coach-card" id="coach-card" aria-live="polite">
+            <span class="coach-spark" aria-hidden="true">✦</span>
+            <div>
+              <span class="stat-label">COACH'S CUE</span>
+              <p id="coach-cue">Start the camera and I’ll guide your next rep.</p>
+            </div>
+          </div>
+          <div class="setup-tip">
+            <span class="tip-icon" aria-hidden="true">↗</span>
+            <p id="setup-tip">
+              <strong>For squats</strong><br />
+              A side view makes depth and heel position easiest to check.
+            </p>
+          </div>
+        </aside>
+      </section>
+
+      <footer class="footer">
+        <span>Built for better movement.</span>
+        <span>Camera analysis runs locally in your browser.</span>
+      </footer>
+    </main>
+    <script type="module" src="/src/main.js"></script>
+  </body>
+</html>
