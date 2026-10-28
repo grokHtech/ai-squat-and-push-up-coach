@@ -8,6 +8,8 @@ output/
 
 # Downloaded at first run
 models/
+!web/public/models/
+!web/public/models/pose_landmarker_full.task
 fonts/
 
 # Python
