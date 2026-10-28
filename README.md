@@ -107,19 +107,25 @@ the recorded-video workflow above remains available for annotated exports.
 
 Try the [public browser coach](https://grokhtech.github.io/ai-squat-and-push-up-coach/).
 
-The browser version runs pose detection and scoring on the device; it does not
-upload camera frames. Serve it from `localhost` during development (camera access
-requires `localhost` or HTTPS):
+The browser version runs pose detection and scoring on the device; camera frames
+are not uploaded. The app, pose model, and inference runtime are included in the
+site and cached locally. Visit the site once while online and wait for the header
+to say **OFFLINE READY**; after that, open the same site without an internet
+connection. Camera access still requires a secure context (`localhost` or HTTPS).
+For offline local development:
 
 ```bash
 cd web
 npm ci
-npm run dev
+npm run build
+npm run preview
 ```
 
-Open the local URL printed by Vite, allow camera access, and choose squat or
-push-up. The first launch downloads the pose model and WebAssembly runtime.
-GitHub Pages deployment is configured in `.github/workflows/pages.yml`.
+Open the local URL printed by Vite, allow camera access, wait for **OFFLINE READY**,
+and choose squat or push-up. The initial visit to the hosted site needs internet
+access to download the app and cache its offline assets. After that, the same
+site works offline in that browser. GitHub Pages deployment is configured in
+`.github/workflows/pages.yml`.
 
 Options:
 

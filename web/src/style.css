@@ -1,7 +1,5 @@
-@import url("https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Space+Grotesk:wght@400;500;600;700&display=swap");
-
 :root {
-  font-family: "DM Sans", sans-serif;
+  font-family: "Segoe UI", Arial, sans-serif;
   color: #f3f5ef;
   background: #101812;
   font-synthesis: none;
@@ -44,7 +42,7 @@ button { font: inherit; }
   align-items: center;
   gap: 10px;
   color: #f6f7f2;
-  font: 700 15px "Space Grotesk", sans-serif;
+  font: 700 15px "Segoe UI", Arial, sans-serif;
   letter-spacing: 0.09em;
   text-decoration: none;
 }
@@ -92,7 +90,7 @@ button { font: inherit; }
 
 h1 {
   margin: 11px 0 9px;
-  font: 600 clamp(38px, 5vw, 58px)/1.02 "Space Grotesk", sans-serif;
+  font: 600 clamp(38px, 5vw, 58px)/1.02 "Segoe UI", Arial, sans-serif;
   letter-spacing: -0.055em;
 }
 
@@ -200,7 +198,7 @@ h1 span { color: var(--lime); }
 }
 
 .camera-placeholder[hidden] { display: none; }
-.camera-placeholder strong { color: #edf2e8; font: 600 18px "Space Grotesk", sans-serif; }
+.camera-placeholder strong { color: #edf2e8; font: 600 18px "Segoe UI", Arial, sans-serif; }
 .camera-placeholder span:last-child { font-size: 12px; }
 
 .camera-icon {
@@ -265,13 +263,13 @@ h1 span { color: var(--lime); }
 .rep-card { min-height: 143px; }
 .rep-count {
   color: #f5f8ee;
-  font: 600 48px/1 "Space Grotesk", sans-serif;
+  font: 600 48px/1 "Segoe UI", Arial, sans-serif;
   letter-spacing: -0.05em;
 }
 
 .stat-note { color: #98a498; font-size: 10px; }
 .score-row { display: flex; align-items: baseline; gap: 6px; }
-.score-value { font: 600 31px/1 "Space Grotesk", sans-serif; }
+.score-value { font: 600 31px/1 "Segoe UI", Arial, sans-serif; }
 .score-unit { color: #859186; font-size: 11px; }
 .score-track { height: 5px; overflow: hidden; border-radius: 5px; background: #2c382e; }
 .score-track span {
@@ -283,7 +281,7 @@ h1 span { color: var(--lime); }
   transition: width 250ms ease;
 }
 
-.stat-value { font: 600 19px "Space Grotesk", sans-serif; }
+.stat-value { font: 600 19px "Segoe UI", Arial, sans-serif; }
 .coach-card {
   display: flex;
   min-height: 103px;

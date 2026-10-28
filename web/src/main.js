@@ -2,9 +2,9 @@ import { FilesetResolver, PoseLandmarker } from "@mediapipe/tasks-vision";
 import { Coach, PoseAnalyzer, skeletonConnections } from "./coach.js";
 import "./style.css";
 
-const MODEL_URL = "https://storage.googleapis.com/mediapipe-models/pose_landmarker/" +
-  "pose_landmarker_full/float16/latest/pose_landmarker_full.task";
-const WASM_URL = "https://cdn.jsdelivr.net/npm/@mediapipe/tasks-vision@1.2.0/wasm";
+const BASE_URL = import.meta.env.BASE_URL;
+const MODEL_URL = `${BASE_URL}models/pose_landmarker_full.task`;
+const WASM_URL = `${BASE_URL}wasm`;
 
 const video = document.querySelector("#camera");
 const canvas = document.querySelector("#overlay");
@@ -23,6 +23,7 @@ const angleValue = document.querySelector("#angle-value");
 const coachCue = document.querySelector("#coach-cue");
 const coachCard = document.querySelector("#coach-card");
 const setupTip = document.querySelector("#setup-tip");
+const offlineLabel = document.querySelector("#offline-label");
 const exerciseButtons = [...document.querySelectorAll(".exercise-button")];
 
 let exercise = "squat";
@@ -33,6 +34,36 @@ let analyzer = new PoseAnalyzer();
 let active = false;
 let animationFrame = null;
 let previousCue = "";
+
+function updateOfflineStatus() {
+  const cached = Boolean(navigator.serviceWorker?.controller);
+  offlineLabel.textContent = cached
+    ? navigator.onLine ? "OFFLINE READY" : "OFFLINE MODE"
+    : navigator.onLine ? "PREPARING OFFLINE MODE" : "OPEN ONCE ONLINE TO PREPARE";
+}
+
+async function prepareOfflineMode() {
+  if (!("serviceWorker" in navigator)) {
+    offlineLabel.textContent = "OFFLINE STORAGE NOT SUPPORTED";
+    return;
+  }
+  try {
+    const registration = await navigator.serviceWorker.register(`${BASE_URL}sw.js`, {
+      scope: BASE_URL,
+    });
+    const installing = registration.installing;
+    installing?.addEventListener("statechange", () => {
+      if (installing.state === "redundant") {
+        offlineLabel.textContent = "OFFLINE SETUP FAILED";
+      }
+    });
+    await navigator.serviceWorker.ready;
+    updateOfflineStatus();
+  } catch (error) {
+    console.error("Could not prepare offline mode.", error);
+    offlineLabel.textContent = "OFFLINE SETUP FAILED";
+  }
+}
 
 const exerciseName = () => exercise === "squat" ? "Squat" : "Push-up";
 
@@ -272,4 +303,9 @@ window.addEventListener("pagehide", () => {
   if (landmarker) landmarker.close();
 });
 
+window.addEventListener("online", updateOfflineStatus);
+window.addEventListener("offline", updateOfflineStatus);
+navigator.serviceWorker?.addEventListener("controllerchange", updateOfflineStatus);
+updateOfflineStatus();
+prepareOfflineMode();
 updateSetupTip();

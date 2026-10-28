@@ -1,7 +1,11 @@
 import test from "node:test";
 import assert from "node:assert/strict";
+import { readFileSync, statSync } from "node:fs";
+import { fileURLToPath } from "node:url";
 
 import { angle, Coach, PoseAnalyzer } from "../src/coach.js";
+
+const publicAsset = (path) => fileURLToPath(new URL(`../public/${path}`, import.meta.url));
 
 const squatMetrics = (value, overrides = {}) => ({
   angle: value,
@@ -88,4 +92,30 @@ test("side-view squat landmarks remain usable when the far side is occluded", ()
   assert.ok(metrics);
   assert.equal(metrics.view, "side");
   assert.ok(metrics.angle > 170);
+});
+
+test("offline bundle includes the model and both MediaPipe WASM variants", () => {
+  for (const [path, minimumBytes] of [
+    ["models/pose_landmarker_full.task", 9_000_000],
+    ["wasm/vision_wasm_internal.js", 300_000],
+    ["wasm/vision_wasm_internal.wasm", 14_000_000],
+    ["wasm/vision_wasm_nosimd_internal.js", 300_000],
+    ["wasm/vision_wasm_nosimd_internal.wasm", 12_000_000],
+  ]) {
+    assert.ok(statSync(publicAsset(path)).size >= minimumBytes, `${path} is missing or incomplete`);
+  }
+});
+
+test("offline service worker precaches all required inference files", () => {
+  const serviceWorker = readFileSync(publicAsset("sw.js"), "utf8");
+  for (const asset of [
+    "models/pose_landmarker_full.task",
+    "wasm/vision_wasm_internal.wasm",
+    "wasm/vision_wasm_nosimd_internal.wasm",
+    ".vite/manifest.json",
+  ]) {
+    assert.ok(serviceWorker.includes(asset), `offline cache does not include ${asset}`);
+  }
+  assert.match(serviceWorker, /ignoreVary:\s*true/,
+    "offline asset cache must match static-host responses with Vary headers");
 });
